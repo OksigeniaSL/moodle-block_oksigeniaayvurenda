@@ -1,0 +1,50 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+{{!
+    @template block_oksigeniaayvurenda/content
+
+    What a reader has in the library, and the ways in.
+
+    Example context (json):
+    {
+        "loansheading": "Tus libros", "holdsheading": "Apartados o en camino", "none": "No tienes libros prestados.",
+        "golibrarylabel": "Ir a la biblioteca", "cardlabel": "Mi carné", "springlabel": "Ayvu rande",
+        "libraries": [{"name": "Biblioteca", "showname": false, "home": "#", "card": "#", "spring": "#",
+            "hasloans": true, "loans": [{"title": "El faro dormido", "url": "#", "when": "hasta el 3 nov", "late": false}],
+            "hasholds": true, "holds": [{"title": "La sal del mar", "url": "#", "when": "te espera hasta el 30 oct", "ready": true}]}]
+    }
+}}
+<div class="block-oksigeniaayvurenda">
+{{#libraries}}
+    {{#showname}}<p class="block-oksigeniaayvurenda-name">{{name}}</p>{{/showname}}
+    <p class="block-oksigeniaayvurenda-heading">{{loansheading}}</p>
+    {{^hasloans}}<p class="block-oksigeniaayvurenda-none">{{none}}</p>{{/hasloans}}
+    {{#hasloans}}
+    <ul class="block-oksigeniaayvurenda-list">
+        {{#loans}}<li{{#late}} class="block-oksigeniaayvurenda-late"{{/late}}><a href="{{url}}">{{title}}</a> <span>{{when}}</span></li>{{/loans}}
+    </ul>
+    {{/hasloans}}
+    {{#hasholds}}
+    <p class="block-oksigeniaayvurenda-heading">{{holdsheading}}</p>
+    <ul class="block-oksigeniaayvurenda-list">
+        {{#holds}}<li{{#ready}} class="block-oksigeniaayvurenda-ready"{{/ready}}><a href="{{url}}">{{title}}</a> <span>{{when}}</span></li>{{/holds}}
+    </ul>
+    {{/hasholds}}
+    <p class="block-oksigeniaayvurenda-links"><a class="btn btn-primary btn-sm" href="{{home}}">{{golibrarylabel}}</a>
+        <a class="btn btn-secondary btn-sm" href="{{card}}">{{cardlabel}}</a>
+        <a class="btn btn-secondary btn-sm" href="{{spring}}">{{springlabel}}</a></p>
+{{/libraries}}
+</div>
