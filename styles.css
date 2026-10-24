@@ -1,8 +1,41 @@
 /* The library block: two short lists and the ways in, with Moodle's own look. */
-.block-oksigeniaayvurenda-heading, .block-oksigeniaayvurenda-name { margin: .5rem 0 .25rem; font-size: .95rem; font-weight: 700; }
-.block-oksigeniaayvurenda-list { margin: 0 0 .5rem; padding-left: 1.1rem; }
-.block-oksigeniaayvurenda-list span { font-size: .85rem; opacity: .85; }
-.block-oksigeniaayvurenda-late span { color: var(--bs-danger, #b02a37); opacity: 1; font-weight: 700; }
-.block-oksigeniaayvurenda-ready span { color: var(--bs-success, #146c43); opacity: 1; font-weight: 700; }
-.block-oksigeniaayvurenda-none { margin: 0 0 .5rem; font-size: .9rem; }
-.block-oksigeniaayvurenda-links { display: flex; flex-wrap: wrap; gap: .4rem; margin: .5rem 0 0; }
+.block-oksigeniaayvurenda-heading,
+.block-oksigeniaayvurenda-name {
+    margin: .5rem 0 .25rem;
+    font-size: .95rem;
+    font-weight: 700;
+}
+
+.block-oksigeniaayvurenda-list {
+    margin: 0 0 .5rem;
+    padding-left: 1.1rem;
+}
+
+.block-oksigeniaayvurenda-list span {
+    font-size: .85rem;
+    opacity: .85;
+}
+
+.block-oksigeniaayvurenda-late span {
+    color: var(--bs-danger, #b02a37);
+    opacity: 1;
+    font-weight: 700;
+}
+
+.block-oksigeniaayvurenda-ready span {
+    color: var(--bs-success, #146c43);
+    opacity: 1;
+    font-weight: 700;
+}
+
+.block-oksigeniaayvurenda-none {
+    margin: 0 0 .5rem;
+    font-size: .9rem;
+}
+
+.block-oksigeniaayvurenda-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+    margin: .5rem 0 0;
+}
