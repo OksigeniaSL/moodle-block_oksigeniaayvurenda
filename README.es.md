@@ -7,7 +7,8 @@
 Un bloque para Moodle que lleva [Oksigenia Ayvurenda](https://github.com/OksigeniaSL/moodle-local_oksigeniaayvurenda),
 la biblioteca escolar, al área personal, a la portada del sitio o a un curso: para cada lector, los libros que tiene
 prestados y hasta cuándo (los que van con retraso, marcados), los que le esperan o por los que espera su turno, y las
-entradas: la biblioteca, su carné y Ayvu rande, las voces de la biblioteca. A quien no es lector no le muestra nada.
+entradas: la biblioteca, su carné y Ayvu rande, las voces de la biblioteca. A quien no es lector pero puede usar la
+biblioteca (personal, docentes, administración) le da la entrada, y la del mostrador si presta; a nadie más, nada.
 
 [Read in English](README.md)
 

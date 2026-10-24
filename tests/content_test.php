@@ -31,7 +31,7 @@ final class content_test extends \advanced_testcase {
      * A reader sees their books out, the late ones marked, with the ways in; someone who is no reader sees nothing.
      */
     public function test_for_user(): void {
-        global $OUTPUT;
+        global $DB, $OUTPUT;
         $this->resetAfterTest();
         /** @var \local_oksigeniaayvurenda_generator $gen */
         $gen = $this->getDataGenerator()->get_plugin_generator('local_oksigeniaayvurenda');
@@ -54,6 +54,16 @@ final class content_test extends \advanced_testcase {
         $this->assertStringContainsString('card.php', $html);
         // The button says its word, not the address of the card.
         $this->assertStringContainsString('>' . get_string('card', 'block_oksigeniaayvurenda') . '</a>', $html);
+        // Someone who is no reader but may use the library gets its way in; the admin, its desk too.
+        $teacher = $this->getDataGenerator()->create_user();
+        $visit = content::for_user((int) $teacher->id, $now);
+        $this->assertSame([], $visit['libraries']);
+        $this->assertStringContainsString('index.php', $visit['visits'][0]['home']);
+        $this->assertSame('', $visit['visits'][0]['desk']);
+        $this->assertStringContainsString('desk.php', content::for_user((int) get_admin()->id, $now)['visits'][0]['desk']);
+        // Without the right to look at the library, nothing.
+        $users = $DB->get_record('role', ['shortname' => 'user']);
+        assign_capability('local/oksigeniaayvurenda:view', CAP_PROHIBIT, $users->id, \context_system::instance()->id, true);
         $this->assertNull(content::for_user((int) $this->getDataGenerator()->create_user()->id, $now));
     }
 }

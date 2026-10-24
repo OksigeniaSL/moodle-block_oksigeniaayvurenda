@@ -24,7 +24,8 @@
         "golibrarylabel": "Ir a la biblioteca", "cardlabel": "Mi carné", "springlabel": "Ayvu rande",
         "libraries": [{"name": "Biblioteca", "showname": false, "home": "#", "card": "#", "spring": "#",
             "hasloans": true, "loans": [{"title": "El faro dormido", "url": "#", "when": "hasta el 3 nov", "late": false}],
-            "hasholds": true, "holds": [{"title": "La sal del mar", "url": "#", "when": "te espera hasta el 30 oct", "ready": true}]}]
+            "hasholds": true, "holds": [{"title": "La sal del mar", "url": "#", "when": "te espera hasta el 30 oct", "ready": true}]}],
+        "hasvisits": false, "visits": [], "desklabel": "Mostrador"
     }
 }}
 <div class="block-oksigeniaayvurenda">
@@ -47,4 +48,11 @@
         <a class="btn btn-secondary btn-sm" href="{{card}}">{{cardlabel}}</a>
         <a class="btn btn-secondary btn-sm" href="{{spring}}">{{springlabel}}</a></p>
 {{/libraries}}
+{{#hasvisits}}
+    {{#visits}}
+    <p class="block-oksigeniaayvurenda-name">{{name}}</p>
+    <p class="block-oksigeniaayvurenda-links"><a class="btn btn-primary btn-sm" href="{{home}}">{{golibrarylabel}}</a>
+        {{#desk}}<a class="btn btn-secondary btn-sm" href="{{desk}}">{{desklabel}}</a>{{/desk}}</p>
+    {{/visits}}
+{{/hasvisits}}
 </div>

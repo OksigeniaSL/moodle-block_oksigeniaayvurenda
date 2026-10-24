@@ -39,7 +39,7 @@ final class content {
         $str = fn(string $key, $a = null) => get_string($key, 'block_oksigeniaayvurenda', $a);
         $libraries = \local_oksigeniaayvurenda\local\mine::summary($userid, $now);
         if (!$libraries) {
-            return null;
+            return self::for_staff($userid);
         }
         $many = count($libraries) > 1;
         foreach ($libraries as &$library) {
@@ -63,6 +63,40 @@ final class content {
             'golibrarylabel' => $str('golibrary'),
             'cardlabel' => $str('card'),
             'springlabel' => $str('spring'),
+        ];
+    }
+
+    /**
+     * For someone who is no reader but may use the libraries (staff, teachers, the site's admins): the way into each
+     * central library, and into its desk for whoever lends. For anyone else, nothing.
+     *
+     * @param int $userid
+     * @return array|null
+     */
+    private static function for_staff(int $userid): ?array {
+        $system = \context_system::instance();
+        if (!has_capability('local/oksigeniaayvurenda:view', $system, $userid)) {
+            return null;
+        }
+        $desk = has_capability('local/oksigeniaayvurenda:desk', $system, $userid);
+        $libraries = array_filter(\local_oksigeniaayvurenda\local\catalogue::libraries(), fn($library) => !$library->parentid);
+        if (!$libraries) {
+            return null;
+        }
+        $url = fn(string $script, \stdClass $library) => (new \moodle_url(
+            '/local/oksigeniaayvurenda/' . $script,
+            ['library' => $library->slug]
+        ))->out(false);
+        return [
+            'libraries' => [],
+            'visits' => array_values(array_map(fn($library) => [
+                'name' => format_string($library->name),
+                'home' => $url('index.php', $library),
+                'desk' => $desk ? $url('desk.php', $library) : '',
+            ], $libraries)),
+            'hasvisits' => true,
+            'golibrarylabel' => get_string('golibrary', 'block_oksigeniaayvurenda'),
+            'desklabel' => get_string('desk', 'block_oksigeniaayvurenda'),
         ];
     }
 }

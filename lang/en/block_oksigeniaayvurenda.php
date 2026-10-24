@@ -25,6 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['card'] = 'My card';
+$string['desk'] = 'Desk';
 $string['due'] = 'until {$a}';
 $string['golibrary'] = 'Go to the library';
 $string['holds'] = 'Set aside or on the way';

@@ -7,7 +7,8 @@
 A block for Moodle that brings [Oksigenia Ayvurenda](https://github.com/OksigeniaSL/moodle-local_oksigeniaayvurenda),
 the school library, to the personal area, the site's front page or a course: for each reader, the books they have out
 and until when (the late ones marked), the books set aside for them or that they are waiting for, and the ways in:
-the library, their card and Ayvu rande, the voices of the library. For someone who is not a reader, it shows nothing.
+the library, their card and Ayvu rande, the voices of the library. Someone who is not a reader but may use the
+library (staff, teachers, the site's admins) gets the way into it, and into its desk if they lend; anyone else, nothing.
 
 [Leer en español](README.es.md)
 
