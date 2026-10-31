@@ -61,6 +61,11 @@ final class content {
             'none' => $str('none'),
             // Not «card» nor «spring»: those are the links of each library, and Mustache would find them first.
             'golibrarylabel' => $str('golibrary'),
+            // Giving a loan more time, where the library lets the reader (each loan says so).
+            'renewaction' => (new \moodle_url('/local/oksigeniaayvurenda/renew.php'))->out(false),
+            'renewlabel' => $str('renew'),
+            'renewback' => qualified_me() ?: (new \moodle_url('/my/'))->out(false),
+            'sesskey' => sesskey(),
             'cardlabel' => $str('card'),
             'springlabel' => $str('spring'),
         ];

@@ -37,6 +37,7 @@ $string['oksigeniaayvurenda:myaddinstance'] = 'Add the library block to the pers
 $string['pluginname'] = 'Library';
 $string['privacy:metadata'] = 'The library block keeps no personal data: it shows what the library keeps.';
 $string['ready'] = 'waiting for you until {$a}';
+$string['renew'] = 'Renew';
 $string['spring'] = 'Ayvu rande';
 $string['waiting'] = 'you are waiting for your turn';
 $string['waitingahead'] = 'you are waiting for your turn: {$a} ahead';

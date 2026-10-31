@@ -54,6 +54,12 @@ final class content_test extends \advanced_testcase {
         $this->assertStringContainsString('card.php', $html);
         // The button says its word, not the address of the card.
         $this->assertStringContainsString('>' . get_string('card', 'block_oksigeniaayvurenda') . '</a>', $html);
+        // Renewing from here only where the library lets its readers.
+        $this->assertStringNotContainsString('renew.php', $html);
+        \local_oksigeniaayvurenda\local\holds::save_settings((int) $library->entityid, ['renewonline' => true]);
+        $html = $OUTPUT->render_from_template('block_oksigeniaayvurenda/content', content::for_user((int) $ana->id, $now));
+        $this->assertStringContainsString('renew.php', $html);
+        $this->assertStringContainsString('>' . get_string('renew', 'block_oksigeniaayvurenda') . '</button>', $html);
         // Someone who is no reader but may use the library gets its way in; the admin, its desk too.
         $teacher = $this->getDataGenerator()->create_user();
         $visit = content::for_user((int) $teacher->id, $now);

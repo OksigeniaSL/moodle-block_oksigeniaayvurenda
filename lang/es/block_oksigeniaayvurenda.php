@@ -37,6 +37,7 @@ $string['oksigeniaayvurenda:myaddinstance'] = 'Añadir el bloque de la bibliotec
 $string['pluginname'] = 'Biblioteca';
 $string['privacy:metadata'] = 'El bloque de la biblioteca no guarda datos personales: muestra lo que guarda la biblioteca.';
 $string['ready'] = 'te espera hasta el {$a}';
+$string['renew'] = 'Ampliar';
 $string['spring'] = 'Ayvu rande';
 $string['waiting'] = 'esperas tu turno';
 $string['waitingahead'] = 'esperas tu turno: {$a} delante';

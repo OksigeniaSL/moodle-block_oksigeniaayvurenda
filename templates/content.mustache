@@ -23,9 +23,11 @@
         "loansheading": "Tus libros", "holdsheading": "Apartados o en camino", "none": "No tienes libros prestados.",
         "golibrarylabel": "Ir a la biblioteca", "cardlabel": "Mi carné", "springlabel": "Ayvu rande",
         "libraries": [{"name": "Biblioteca", "showname": false, "home": "#", "card": "#", "spring": "#",
-            "hasloans": true, "loans": [{"title": "El faro dormido", "url": "#", "when": "hasta el 3 nov", "late": false}],
+            "hasloans": true, "loans": [{"title": "El faro dormido", "url": "#", "when": "hasta el 3 nov", "late": false,
+                "canrenew": true, "loanid": 7}],
             "hasholds": true, "holds": [{"title": "La sal del mar", "url": "#", "when": "te espera hasta el 30 oct", "ready": true}]}],
-        "hasvisits": false, "visits": [], "desklabel": "Mostrador"
+        "hasvisits": false, "visits": [], "desklabel": "Mostrador", "renewaction": "#", "renewlabel": "Ampliar",
+        "renewback": "#", "sesskey": "x"
     }
 }}
 <div class="block-oksigeniaayvurenda">
@@ -35,7 +37,8 @@
     {{^hasloans}}<p class="block-oksigeniaayvurenda-none">{{none}}</p>{{/hasloans}}
     {{#hasloans}}
     <ul class="block-oksigeniaayvurenda-list">
-        {{#loans}}<li{{#late}} class="block-oksigeniaayvurenda-late"{{/late}}><a href="{{url}}">{{title}}</a> <span>{{when}}</span></li>{{/loans}}
+        {{#loans}}<li{{#late}} class="block-oksigeniaayvurenda-late"{{/late}}><a href="{{url}}">{{title}}</a> <span>{{when}}</span>
+            {{#canrenew}}<form class="block-oksigeniaayvurenda-renew" method="post" action="{{renewaction}}"><input type="hidden" name="sesskey" value="{{sesskey}}"><input type="hidden" name="loan" value="{{loanid}}"><input type="hidden" name="returnurl" value="{{renewback}}"><button type="submit" class="btn btn-link btn-sm p-0">{{renewlabel}}</button></form>{{/canrenew}}</li>{{/loans}}
     </ul>
     {{/hasloans}}
     {{#hasholds}}

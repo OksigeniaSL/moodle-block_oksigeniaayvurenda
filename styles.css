@@ -28,6 +28,11 @@
     font-weight: 700;
 }
 
+.block-oksigeniaayvurenda-renew {
+    display: inline;
+    margin-left: .35rem;
+}
+
 .block-oksigeniaayvurenda-none {
     margin: 0 0 .5rem;
     font-size: .9rem;
