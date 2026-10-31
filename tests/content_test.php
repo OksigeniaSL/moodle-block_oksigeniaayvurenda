@@ -67,6 +67,15 @@ final class content_test extends \advanced_testcase {
         $this->assertStringContainsString('index.php', $visit['visits'][0]['home']);
         $this->assertSame('', $visit['visits'][0]['desk']);
         $this->assertStringContainsString('desk.php', content::for_user((int) get_admin()->id, $now)['visits'][0]['desk']);
+        // Whoever keeps a classroom library gets it with its desk, though it hangs from another.
+        $room = $gen->create_library(['entityid' => $library->entityid, 'name' => 'Aula de 3.º', 'kind' => 'classroom',
+            'parentid' => $library->id]);
+        $DB->insert_record('local_oksigeniaayvurenda_keeper', ['libraryid' => $room->id, 'userid' => $teacher->id,
+            'timecreated' => $now]);
+        \cache::make('local_oksigeniaayvurenda', 'access')->purge();
+        $kept = array_column(content::for_user((int) $teacher->id, $now)['visits'], 'desk', 'name');
+        $this->assertStringContainsString('desk.php', $kept['Aula de 3.º']);
+        $this->assertSame('', $kept[$library->name]);
         // A library getting ready for its staff only: neither its reader nor anyone else sees it; its admin does.
         \local_oksigeniaayvurenda\local\access::set_closed((int) $library->entityid, true);
         $this->assertNull(content::for_user((int) $ana->id, $now));

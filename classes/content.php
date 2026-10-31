@@ -80,15 +80,13 @@ final class content {
      * @return array|null
      */
     private static function for_staff(int $userid): ?array {
-        $system = \context_system::instance();
-        if (!has_capability('local/oksigeniaayvurenda:view', $system, $userid)) {
-            return null;
-        }
-        $desk = has_capability('local/oksigeniaayvurenda:desk', $system, $userid);
+        // Each library by the permissions in its own centre (on a shared site, the staff's roles are in their centre's
+        // category), and the libraries someone keeps, with their desk.
+        $access = \local_oksigeniaayvurenda\local\access::class;
         $libraries = array_filter(
             \local_oksigeniaayvurenda\local\catalogue::libraries(),
-            fn($library) => !$library->parentid
-                && \local_oksigeniaayvurenda\local\access::can('local/oksigeniaayvurenda:view', $library, $userid)
+            fn($library) => $access::can('local/oksigeniaayvurenda:view', $library, $userid)
+                && (!$library->parentid || $access::keeps($library, $userid))
         );
         if (!$libraries) {
             return null;
@@ -100,9 +98,10 @@ final class content {
         return [
             'libraries' => [],
             'visits' => array_values(array_map(fn($library) => [
-                'name' => format_string($library->name),
+                'name' => format_string($library->name, true, ['escape' => false]),
                 'home' => $url('index.php', $library),
-                'desk' => $desk ? $url('desk.php', $library) : '',
+                'desk' => $access::can('local/oksigeniaayvurenda:desk', $library, $userid) || $access::keeps($library, $userid)
+                    ? $url('desk.php', $library) : '',
             ], $libraries)),
             'hasvisits' => true,
             'golibrarylabel' => get_string('golibrary', 'block_oksigeniaayvurenda'),
