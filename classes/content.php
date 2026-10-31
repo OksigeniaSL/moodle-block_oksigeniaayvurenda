@@ -68,7 +68,8 @@ final class content {
 
     /**
      * For someone who is no reader but may use the libraries (staff, teachers, the site's admins): the way into each
-     * central library, and into its desk for whoever lends. For anyone else, nothing.
+     * central library they may enter (not one still getting ready for its staff only), and into its desk for whoever
+     * lends. For anyone else, nothing.
      *
      * @param int $userid
      * @return array|null
@@ -79,7 +80,11 @@ final class content {
             return null;
         }
         $desk = has_capability('local/oksigeniaayvurenda:desk', $system, $userid);
-        $libraries = array_filter(\local_oksigeniaayvurenda\local\catalogue::libraries(), fn($library) => !$library->parentid);
+        $libraries = array_filter(
+            \local_oksigeniaayvurenda\local\catalogue::libraries(),
+            fn($library) => !$library->parentid
+                && \local_oksigeniaayvurenda\local\access::can('local/oksigeniaayvurenda:view', $library, $userid)
+        );
         if (!$libraries) {
             return null;
         }

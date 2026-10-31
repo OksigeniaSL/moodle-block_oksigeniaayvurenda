@@ -61,6 +61,12 @@ final class content_test extends \advanced_testcase {
         $this->assertStringContainsString('index.php', $visit['visits'][0]['home']);
         $this->assertSame('', $visit['visits'][0]['desk']);
         $this->assertStringContainsString('desk.php', content::for_user((int) get_admin()->id, $now)['visits'][0]['desk']);
+        // A library getting ready for its staff only: neither its reader nor anyone else sees it; its admin does.
+        \local_oksigeniaayvurenda\local\access::set_closed((int) $library->entityid, true);
+        $this->assertNull(content::for_user((int) $ana->id, $now));
+        $this->assertNull(content::for_user((int) $teacher->id, $now));
+        $this->assertNotEmpty(content::for_user((int) get_admin()->id, $now)['visits']);
+        \local_oksigeniaayvurenda\local\access::set_closed((int) $library->entityid, false);
         // Without the right to look at the library, nothing.
         $users = $DB->get_record('role', ['shortname' => 'user']);
         assign_capability('local/oksigeniaayvurenda:view', CAP_PROHIBIT, $users->id, \context_system::instance()->id, true);
