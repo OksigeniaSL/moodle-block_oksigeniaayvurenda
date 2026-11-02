@@ -54,8 +54,22 @@ final class content {
             $library['hasholds'] = (bool) $library['holds'];
         }
         unset($library);
+        // Whoever keeps a library is a reader of its centre: the way to its desk, besides their own books.
+        $access = \local_oksigeniaayvurenda\local\access::class;
+        $kept = array_filter(
+            \local_oksigeniaayvurenda\local\catalogue::libraries(),
+            fn($library) => $access::keeps($library, $userid)
+        );
         return [
             'libraries' => $libraries,
+            'visits' => array_values(array_map(fn($library) => [
+                'name' => format_string($library->name, true, ['escape' => false]),
+                'home' => (new \moodle_url('/local/oksigeniaayvurenda/index.php', ['library' => $library->slug]))->out(false),
+                'desk' => (new \moodle_url('/local/oksigeniaayvurenda/desk.php', ['library' => $library->slug]))->out(false),
+            ], $kept)),
+            'hasvisits' => (bool) $kept,
+            'golibrarylabel' => $str('golibrary'),
+            'desklabel' => $str('desk'),
             'loansheading' => $str('loans'),
             'holdsheading' => $str('holds'),
             'none' => $str('none'),

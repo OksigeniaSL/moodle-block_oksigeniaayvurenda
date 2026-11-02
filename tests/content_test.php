@@ -73,9 +73,13 @@ final class content_test extends \advanced_testcase {
         $DB->insert_record('local_oksigeniaayvurenda_keeper', ['libraryid' => $room->id, 'userid' => $teacher->id,
             'timecreated' => $now]);
         \cache::make('local_oksigeniaayvurenda', 'access')->purge();
-        $kept = array_column(content::for_user((int) $teacher->id, $now)['visits'], 'desk', 'name');
+        $gen->create_reader(['entityid' => $library->entityid, 'userid' => $teacher->id, 'readertype' => 'teacher']);
+        \cache::make('local_oksigeniaayvurenda', 'access')->purge();
+        $keeper = content::for_user((int) $teacher->id, $now);
+        $this->assertCount(1, $keeper['libraries'], 'a keeper is a reader, with their own books');
+        $kept = array_column($keeper['visits'], 'desk', 'name');
         $this->assertStringContainsString('desk.php', $kept['Aula de 3.º']);
-        $this->assertSame('', $kept[$library->name]);
+        $this->assertArrayNotHasKey($library->name, $kept);
         // A library getting ready for its staff only: neither its reader nor anyone else sees it; its admin does.
         \local_oksigeniaayvurenda\local\access::set_closed((int) $library->entityid, true);
         $this->assertNull(content::for_user((int) $ana->id, $now));
