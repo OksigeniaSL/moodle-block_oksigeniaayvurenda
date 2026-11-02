@@ -68,7 +68,6 @@ final class content {
                 'desk' => (new \moodle_url('/local/oksigeniaayvurenda/desk.php', ['library' => $library->slug]))->out(false),
             ], $kept)),
             'hasvisits' => (bool) $kept,
-            'golibrarylabel' => $str('golibrary'),
             'desklabel' => $str('desk'),
             'loansheading' => $str('loans'),
             'holdsheading' => $str('holds'),
