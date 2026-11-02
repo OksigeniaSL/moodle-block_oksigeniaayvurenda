@@ -44,3 +44,19 @@
     gap: .4rem;
     margin: .5rem 0 0;
 }
+.block-oksigeniaayvurenda-memory {
+    display: flex;
+    align-items: flex-start;
+    gap: .6rem;
+    margin: 0 0 .75rem;
+    font-style: italic;
+}
+
+.block-oksigeniaayvurenda-memory img {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
+}
