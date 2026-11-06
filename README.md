@@ -2,7 +2,7 @@
 
 [![License: GPLv3](https://img.shields.io/badge/license-GPLv3+-blue.svg)](LICENSE)
 ![Moodle](https://img.shields.io/badge/Moodle-4.5%E2%80%935.3-orange)
-![Status](https://img.shields.io/badge/status-alpha-red)
+![Status](https://img.shields.io/badge/status-beta-yellow)
 
 A block for Moodle that brings [Oksigenia Ayvurenda](https://github.com/OksigeniaSL/moodle-local_oksigeniaayvurenda),
 online library management, to the personal area, the site's front page or a course: for each reader, the books they have out

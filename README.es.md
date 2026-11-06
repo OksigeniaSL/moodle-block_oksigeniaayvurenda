@@ -2,7 +2,7 @@
 
 [![Licencia: GPLv3](https://img.shields.io/badge/licencia-GPLv3+-blue.svg)](LICENSE)
 ![Moodle](https://img.shields.io/badge/Moodle-4.5%E2%80%935.3-orange)
-![Estado](https://img.shields.io/badge/estado-alfa-red)
+![Estado](https://img.shields.io/badge/estado-beta-yellow)
 
 Un bloque para Moodle que lleva [Oksigenia Ayvurenda](https://github.com/OksigeniaSL/moodle-local_oksigeniaayvurenda),
 la gestión de bibliotecas en línea, al área personal, a la portada del sitio o a un curso: para cada lector, los libros que tiene
