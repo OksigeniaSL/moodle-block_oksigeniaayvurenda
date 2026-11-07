@@ -24,20 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['card'] = 'My card';
-$string['desk'] = 'Desk';
-$string['due'] = 'until {$a}';
-$string['golibrary'] = 'Go to the library';
-$string['holds'] = 'Set aside or on the way';
-$string['late'] = 'late: it was until {$a}';
-$string['loans'] = 'Your books';
-$string['none'] = 'You have no books out.';
 $string['oksigeniaayvurenda:addinstance'] = 'Add the library block';
 $string['oksigeniaayvurenda:myaddinstance'] = 'Add the library block to the personal area';
 $string['pluginname'] = 'Library';
 $string['privacy:metadata'] = 'The library block keeps no personal data: it shows what the library keeps.';
-$string['ready'] = 'waiting for you until {$a}';
-$string['renew'] = 'Renew';
-$string['spring'] = 'Ayvu rande';
-$string['waiting'] = 'you are waiting for your turn';
-$string['waitingahead'] = 'you are waiting for your turn: {$a} ahead';

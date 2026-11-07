@@ -66,6 +66,27 @@ class block_oksigeniaayvurenda extends block_base {
         $data = \block_oksigeniaayvurenda\content::for_user((int) $USER->id);
         if ($data) {
             $this->content->text = $OUTPUT->render_from_template('block_oksigeniaayvurenda/content', $data);
+            // Its width says its layout (Chrome 93 and Firefox 98 have no container queries): a column, a narrow one or
+            // two columns. Without it, the column, which works at any width.
+            $this->page->requires->js_init_code(
+                "(function() {
+                    if (!window.ResizeObserver) {
+                        return;
+                    }
+                    var watch = new ResizeObserver(function(seen) {
+                        seen.forEach(function(one) {
+                            var w = one.contentRect.width;
+                            var size = w < 270 ? 'narrow' : (w >= 560 ? 'wide' : 'side');
+                            if (one.target.getAttribute('data-size') !== size) {
+                                one.target.setAttribute('data-size', size);
+                            }
+                        });
+                    });
+                    document.querySelectorAll('[data-ayvb]').forEach(function(block) {
+                        watch.observe(block);
+                    });
+                })();"
+            );
         }
         return $this->content;
     }

@@ -1,62 +1,1079 @@
-/* The library block: two short lists and the ways in, with Moodle's own look. */
-.block-oksigeniaayvurenda-heading,
-.block-oksigeniaayvurenda-name {
-    margin: .5rem 0 .25rem;
+/* The letters of the library (SIL's Andika and Literata, OFL, with the Guarani letters), under names of their own so
+ that they never stand in for the theme's. */
+@font-face {
+    font-family: "Ayvb Andika";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url([[font:block_oksigeniaayvurenda|andika-400.woff2]]) format("woff2");
+}
+
+@font-face {
+    font-family: "Ayvb Andika";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url([[font:block_oksigeniaayvurenda|andika-700.woff2]]) format("woff2");
+}
+
+@font-face {
+    font-family: "Ayvb Literata";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url([[font:block_oksigeniaayvurenda|literata-600.woff2]]) format("woff2");
+}
+
+/* More than one centre: each its own, with its name. */
+.block-oksigeniaayvurenda .ayvb + .ayvb {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--bs-border-color, #dee2e6);
+}
+
+.block-oksigeniaayvurenda .ayvb-name {
+    margin: 0;
+    font-family: var(--ayvb-title);
+    font-weight: 600;
     font-size: .95rem;
+    color: var(--ayvb-muted);
+}
+
+.block-oksigeniaayvurenda .ayvb-deskname {
+    margin-top: .6rem;
     font-weight: 700;
 }
 
-.block-oksigeniaayvurenda-list {
-    margin: 0 0 .5rem;
-    padding-left: 1.1rem;
-}
-
-.block-oksigeniaayvurenda-list span {
-    font-size: .85rem;
-    opacity: .85;
-}
-
-.block-oksigeniaayvurenda-late span {
-    color: var(--bs-danger, #b02a37);
-    opacity: 1;
-    font-weight: 700;
-}
-
-.block-oksigeniaayvurenda-ready span {
-    color: var(--bs-success, #146c43);
-    opacity: 1;
-    font-weight: 700;
-}
-
-.block-oksigeniaayvurenda-renew {
+.block-oksigeniaayvurenda .ayvb-due form {
     display: inline;
-    margin-left: .35rem;
+    margin: 0;
 }
 
-.block-oksigeniaayvurenda-none {
-    margin: 0 0 .5rem;
-    font-size: .9rem;
+.block-oksigeniaayvurenda .ayvb-pick-do {
+    margin: .6rem 0 0;
 }
 
-.block-oksigeniaayvurenda-links {
+/* Two columns: the name of the centre goes over both. */
+.block-oksigeniaayvurenda .ayvb[data-size="wide"] > .ayvb-name {
+    grid-column: 1 / -1;
+}
+
+/* The library on the personal area (block 0.2.0, from Gaudí's mock-up). Everything hangs from .ayvb, inside the theme's
+ own block frame (title, border, card). Text, lines and surfaces take the theme's variables; the library's own things
+ (cream plates, covers, Literata titles, pill buttons) keep Ayvurenda's colours, in light and dark alike. No container
+ queries (Chrome 93 and Firefox 98 lack them): a tiny ResizeObserver sets data-size, and without it the block stays in
+ its side layout, which works at any width. The top right corner (7.5rem) holds text or nothing, never a picture. */
+.block-oksigeniaayvurenda .ayvb {
+    --ayvb-ink: var(--bs-body-color, #1d2125);
+    --ayvb-muted: var(--bs-secondary-color, #5c6670);
+    --ayvb-line: var(--bs-border-color, #dee2e6);
+    --ayvb-hole: var(--bs-tertiary-bg, #f5f6f7);
+    --ayvb-green2: #2c7a6a;
+    --ayvb-accent: #17574c;
+    --ayvb-btn: #17574c;
+    --ayvb-btn-ink: #fff;
+    --ayvb-btn-shadow: 0 6px 14px -8px rgba(23, 87, 76, .7);
+    --ayvb-ring: rgba(23, 87, 76, .38);
+    --ayvb-tint: rgba(23, 87, 76, .07);
+    --ayvb-plate: #f3e6cc;
+    --ayvb-plate-ink: #1e2b2a;
+    --ayvb-plate-muted: #5f6b67;
+    --ayvb-late: #a3321e;
+    --ayvb-ok: #1d7349;
+    --ayvb-short: #855600;
+    --ayvb-mark: #2c7a6a;
+    --ayvb-star: #d99a1b;
+    --ayvb-title: "Ayvb Literata", Georgia, serif;
+    --ayvb-cover-shadow:
+        0 0 0 1px rgba(30, 43, 42, .1),
+        0 1px 2px rgba(0, 0, 0, .14),
+        0 8px 14px -8px rgba(15, 58, 51, .55);
+    display: grid;
+    gap: 1.1rem;
+    min-width: 0;
+    color: var(--ayvb-ink);
+    font-family: "Ayvb Andika", system-ui, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.45;
+}
+
+html[data-bs-theme="dark"] .block-oksigeniaayvurenda .ayvb {
+    --ayvb-accent: #8fd3c1;
+    --ayvb-btn: #1f6a5c;
+    --ayvb-btn-shadow: 0 6px 16px -8px rgba(0, 0, 0, .8);
+    --ayvb-ring: rgba(143, 211, 193, .45);
+    --ayvb-tint: rgba(143, 211, 193, .09);
+    --ayvb-plate: #f3e9d6;
+    --ayvb-late: #ff9f8a;
+    --ayvb-ok: #7fd6a6;
+    --ayvb-short: #ffd56b;
+    --ayvb-mark: #8fd3c1;
+    --ayvb-star: #f6ce6e;
+}
+
+.block-oksigeniaayvurenda .ayvb * {
+    box-sizing: border-box;
+}
+
+.block-oksigeniaayvurenda .ayvb :focus-visible {
+    outline: 3px solid #f0b43c;
+    outline-offset: 2px;
+    border-radius: 6px;
+}
+
+.block-oksigeniaayvurenda .ayvb .ayvb-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/* Sections, one under another in a side column, split by a dotted line; side by side when the block is wide. */
+.block-oksigeniaayvurenda .ayvb > .ayvb-sec {
+    min-width: 0;
+}
+
+.block-oksigeniaayvurenda .ayvb > .ayvb-sec + .ayvb-sec {
+    border-top: 1px dashed var(--ayvb-line);
+    padding-top: 1rem;
+}
+
+.block-oksigeniaayvurenda .ayvb-h {
+    margin: 0;
+    font-family: var(--ayvb-title);
+    font-weight: 600;
+    font-size: 1.08rem;
+    line-height: 1.25;
+    color: var(--ayvb-ink);
+    word-spacing: .06em;
+}
+
+.block-oksigeniaayvurenda .ayvb-small {
+    margin: 0;
+    font-size: .88rem;
+    color: var(--ayvb-muted);
+}
+
+.block-oksigeniaayvurenda a.ayvb-more {
+    display: inline-block;
+    margin-top: .5rem;
+    font-weight: 700;
+    font-size: .92rem;
+    color: var(--ayvb-accent);
+}
+
+/* Who speaks: a still portrait, round, small, and what the character says. */
+.block-oksigeniaayvurenda .ayvb-say {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: .75rem;
+    align-items: start;
+}
+
+.block-oksigeniaayvurenda .ayvb-say.no-face {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.block-oksigeniaayvurenda .ayvb-face {
+    display: block;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--ayvb-plate);
+    box-shadow: 0 0 0 2px var(--bs-card-bg, #fff), 0 0 0 3.5px rgba(23, 87, 76, .2);
+}
+
+.block-oksigeniaayvurenda .ayvb-line {
+    margin: .2rem 0 0;
+    font-size: .95rem;
+}
+
+.block-oksigeniaayvurenda .ayvb-sign {
+    margin: .5rem 0 0;
+    font-size: .82rem;
+    color: var(--ayvb-muted);
+}
+
+/* A book on its cream plate. */
+.block-oksigeniaayvurenda .ayvb-cover {
+    position: relative;
+    display: block;
+    flex: none;
+    width: var(--cw, 4.25rem);
+    aspect-ratio: 2 / 3;
+    overflow: hidden;
+    border-radius: 3px 8px 8px 3px;
+    background: #e8dcc4;
+    box-shadow: var(--ayvb-cover-shadow);
+}
+
+.block-oksigeniaayvurenda .ayvb-cover img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.block-oksigeniaayvurenda .ayvb-cover::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: inset 4px 0 0 rgba(0, 0, 0, .12), inset 5.5px 0 0 rgba(255, 255, 255, .14);
+}
+
+.block-oksigeniaayvurenda .ayvb-cover.xs {
+    --cw: 2.1rem;
+}
+
+.block-oksigeniaayvurenda .ayvb-cover.sm {
+    --cw: 3rem;
+}
+
+.block-oksigeniaayvurenda .ayvb-cover.md {
+    --cw: 4.25rem;
+}
+
+/* A cover drawn by the library where there is no picture: its colour, two rules and the title. */
+.block-oksigeniaayvurenda .ayvb-cover.drawn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16% 8% 16% 12%;
+    background: var(--dc-bg);
+    color: var(--dc-ink);
+}
+
+.block-oksigeniaayvurenda .ayvb-cover.drawn::before {
+    content: "";
+    position: absolute;
+    left: 14%;
+    right: 9%;
+    top: 9%;
+    bottom: 9%;
+    opacity: .55;
+    border-top: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+}
+
+.block-oksigeniaayvurenda .ayvb-cover.drawn i {
+    position: relative;
+    font-style: normal;
+    font-family: var(--ayvb-title);
+    font-weight: 600;
+    text-align: center;
+    font-size: .5rem;
+    line-height: 1.15;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+/* Too small for the title: the spine label (tejuelo) instead. */
+.block-oksigeniaayvurenda .ayvb-cover.drawn.xs i,
+.block-oksigeniaayvurenda .ayvb-cover.drawn.sm i {
+    position: absolute;
+    left: 30%;
+    right: 22%;
+    bottom: 17%;
+    height: 13%;
+    display: block;
+    border-radius: 2px;
+    background: currentColor;
+    opacity: .55;
+    font-size: 0;
+}
+
+.block-oksigeniaayvurenda .dc-green {
+    --dc-bg: #17574c;
+    --dc-ink: #f2eadb;
+}
+
+.block-oksigeniaayvurenda .dc-night {
+    --dc-bg: #0f3a33;
+    --dc-ink: #f0b43c;
+}
+
+.block-oksigeniaayvurenda .dc-paper {
+    --dc-bg: #efe2c8;
+    --dc-ink: #17574c;
+}
+
+.block-oksigeniaayvurenda .dc-ink {
+    --dc-bg: #24302e;
+    --dc-ink: #ece4d4;
+}
+
+.block-oksigeniaayvurenda .dc-stone {
+    --dc-bg: #d7d0c2;
+    --dc-ink: #1e2b2a;
+}
+
+.block-oksigeniaayvurenda .dc-coral {
+    --dc-bg: #b5523d;
+    --dc-ink: #fbf6ec;
+}
+
+.block-oksigeniaayvurenda .ayvb-pick {
+    display: grid;
+    grid-template-columns: 4.25rem minmax(0, 1fr);
+    gap: .85rem;
+    align-items: center;
+    margin-top: .8rem;
+    padding: .8rem;
+    border-radius: 18px;
+    background: var(--ayvb-plate);
+    color: var(--ayvb-plate-ink);
+}
+
+.block-oksigeniaayvurenda .ayvb-pick-txt {
+    display: grid;
+    gap: .1rem;
+    justify-items: start;
+    min-width: 0;
+}
+
+.block-oksigeniaayvurenda a.ayvb-title {
+    font-family: var(--ayvb-title);
+    font-weight: 600;
+    font-size: .98rem;
+    line-height: 1.25;
+    color: var(--ayvb-ink);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+
+.block-oksigeniaayvurenda .ayvb-title:hover {
+    text-decoration: underline;
+}
+
+.block-oksigeniaayvurenda .ayvb-pick a.ayvb-title {
+    font-size: 1.04rem;
+    color: #0f3a33;
+}
+
+.block-oksigeniaayvurenda .ayvb-author {
+    font-size: .85rem;
+    color: var(--ayvb-plate-muted);
+}
+
+.block-oksigeniaayvurenda .ayvb-state {
+    display: inline-flex;
+    align-items: baseline;
+    gap: .4rem;
+    font-size: .85rem;
+    font-weight: 700;
+}
+
+.block-oksigeniaayvurenda .ayvb-state::before {
+    content: "";
+    flex: none;
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+    background: currentColor;
+    transform: translateY(-.05em);
+}
+
+.block-oksigeniaayvurenda .ayvb-state.ok {
+    color: var(--ayvb-ok);
+}
+
+.block-oksigeniaayvurenda .ayvb-state.short {
+    color: var(--ayvb-short);
+}
+
+.block-oksigeniaayvurenda .ayvb-pick .ayvb-state.ok {
+    color: #1d7349;
+}
+
+.block-oksigeniaayvurenda .ayvb-pick .ayvb-state.short {
+    color: #855600;
+}
+
+.block-oksigeniaayvurenda .ayvb-pick-do {
     display: flex;
     flex-wrap: wrap;
     gap: .4rem;
-    margin: .5rem 0 0;
-}
-.block-oksigeniaayvurenda-memory {
-    display: flex;
-    align-items: flex-start;
-    gap: .6rem;
-    margin: 0 0 .75rem;
-    font-style: italic;
+    align-items: center;
+    margin-top: .45rem;
 }
 
-.block-oksigeniaayvurenda-memory img {
+/* Pill buttons. */
+.block-oksigeniaayvurenda a.ayvb-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .4rem;
+    min-height: 2.5rem;
+    padding: .35rem 1rem;
+    border: 0;
+    border-radius: 999px;
+    background: var(--ayvb-btn);
+    color: var(--ayvb-btn-ink);
+    box-shadow: var(--ayvb-btn-shadow);
+    font-family: inherit;
+    font-size: .94rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform .15s ease, filter .15s ease;
+}
+
+.block-oksigeniaayvurenda .ayvb-btn:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.06);
+}
+
+.block-oksigeniaayvurenda .ayvb-btn svg {
     flex: none;
-    width: 40px;
-    height: 40px;
+    width: 1.1rem;
+    height: 1.1rem;
+}
+
+.block-oksigeniaayvurenda a.ayvb-btn-quiet {
+    background: transparent;
+    color: var(--ayvb-accent);
+    box-shadow: inset 0 0 0 1.5px var(--ayvb-ring);
+}
+
+.block-oksigeniaayvurenda .ayvb-btn-sm {
+    min-height: 2rem;
+    padding: .2rem .85rem;
+    font-size: .86rem;
+}
+
+.block-oksigeniaayvurenda .ayvb-listen {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    min-height: 2rem;
+    padding: .2rem .75rem;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(23, 87, 76, .1);
+    color: #17574c;
+    font-family: inherit;
+    font-size: .84rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.block-oksigeniaayvurenda .ayvb-listen svg {
+    width: 1rem;
+    height: 1rem;
+    flex: none;
+}
+
+.block-oksigeniaayvurenda .ayvb-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--ayvb-line);
+}
+
+.block-oksigeniaayvurenda .ayvb-actions .ayvb-btn {
+    flex: 1 1 auto;
+}
+
+/* What just arrived: three covers standing on a shelf. */
+.block-oksigeniaayvurenda .ayvb-shelf {
+    margin-top: .8rem;
+    padding: .8rem .8rem 0;
+    border-radius: 18px 18px 8px 8px;
+    background: var(--ayvb-plate);
+}
+
+.block-oksigeniaayvurenda .ayvb-shelf-row {
+    display: flex;
+    gap: .6rem;
+    align-items: flex-end;
+}
+
+.block-oksigeniaayvurenda .ayvb-shelf-row a {
+    display: block;
+    flex: 0 1 auto;
+    width: min(4.6rem, calc((100% - 1.2rem) / 3));
+    text-decoration: none;
+}
+
+.block-oksigeniaayvurenda .ayvb-shelf-row .ayvb-cover {
+    width: 100%;
+}
+
+.block-oksigeniaayvurenda .ayvb-shelf::after {
+    content: "";
+    display: block;
+    height: .55rem;
+    margin: 0 -.8rem;
+    border-radius: 0 0 8px 8px;
+    background: linear-gradient(#d8b98f, #b8915f);
+    box-shadow: 0 6px 10px -7px rgba(60, 40, 20, .55);
+}
+
+.block-oksigeniaayvurenda .ayvb-shelf-do {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem .8rem;
+    align-items: center;
+}
+
+/* The reader's books at home, with when they go back, in words. */
+.block-oksigeniaayvurenda .ayvb-count {
+    display: inline-block;
+    min-width: 1.5rem;
+    margin-left: .35rem;
+    padding: .12rem .45rem;
+    border-radius: 999px;
+    background: var(--ayvb-tint);
+    color: var(--ayvb-accent);
+    font-family: system-ui, sans-serif;
+    font-size: .78rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+    vertical-align: .12em;
+}
+
+.block-oksigeniaayvurenda .ayvb-books,
+.block-oksigeniaayvurenda .ayvb-reads {
+    list-style: none;
+    margin: .7rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: .8rem;
+}
+
+.block-oksigeniaayvurenda .ayvb-book,
+.block-oksigeniaayvurenda .ayvb-read {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: .75rem;
+    align-items: center;
+    min-width: 0;
+}
+
+/* In lists a title takes two lines at most; on the plate, all it needs. */
+.block-oksigeniaayvurenda .ayvb-books .ayvb-title,
+.block-oksigeniaayvurenda .ayvb-reads .ayvb-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.block-oksigeniaayvurenda .ayvb-due {
+    margin: .15rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .3rem .6rem;
+    font-size: .88rem;
+    color: var(--ayvb-muted);
+}
+
+.block-oksigeniaayvurenda .ayvb-due.late {
+    color: var(--ayvb-late);
+    font-weight: 700;
+}
+
+.block-oksigeniaayvurenda .ayvb-due.ready {
+    color: var(--ayvb-ok);
+    font-weight: 700;
+}
+
+.block-oksigeniaayvurenda .ayvb-renew {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.75rem;
+    padding: .1rem .7rem;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--ayvb-accent);
+    box-shadow: inset 0 0 0 1.5px var(--ayvb-ring);
+    font-family: inherit;
+    font-size: .82rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.block-oksigeniaayvurenda .ayvb-books + .ayvb-small {
+    margin-top: .7rem;
+}
+
+/* The class challenge: its marks. */
+.block-oksigeniaayvurenda .ayvb-goal-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: .2rem .6rem;
+}
+
+.block-oksigeniaayvurenda .ayvb-goal-n {
+    font-size: .88rem;
+    font-weight: 700;
+    color: var(--ayvb-accent);
+}
+
+.block-oksigeniaayvurenda .ayvb-marks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .3rem;
+    margin: .55rem 0 .35rem;
+}
+
+.block-oksigeniaayvurenda .ayvb-marks svg {
+    width: 1.4rem;
+    height: 1.4rem;
+    display: block;
+}
+
+.block-oksigeniaayvurenda .ayvb-marks .on {
+    fill: var(--ayvb-mark);
+}
+
+.block-oksigeniaayvurenda .ayvb-marks .off {
+    fill: none;
+    stroke: var(--ayvb-muted);
+    stroke-width: 1.4;
+    opacity: .55;
+}
+
+.block-oksigeniaayvurenda .ayvb-marks.stars .on {
+    fill: var(--ayvb-star);
+}
+
+.block-oksigeniaayvurenda .ayvb-bar {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 3px;
+    margin: .6rem 0 .4rem;
+}
+
+.block-oksigeniaayvurenda .ayvb-bar-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.block-oksigeniaayvurenda .ayvb-bar-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.block-oksigeniaayvurenda .ayvb-bar-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.block-oksigeniaayvurenda .ayvb-bar-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.block-oksigeniaayvurenda .ayvb-bar-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.block-oksigeniaayvurenda .ayvb-bar-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.block-oksigeniaayvurenda .ayvb-bar-7 {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.block-oksigeniaayvurenda .ayvb-bar-8 {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+}
+
+.block-oksigeniaayvurenda .ayvb-bar-9 {
+    grid-template-columns: repeat(9, minmax(0, 1fr));
+}
+
+.block-oksigeniaayvurenda .ayvb-bar-10 {
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+}
+
+.block-oksigeniaayvurenda .ayvb-bar-11 {
+    grid-template-columns: repeat(11, minmax(0, 1fr));
+}
+
+.block-oksigeniaayvurenda .ayvb-bar i {
+    height: .42rem;
+    border-radius: 3px;
+    background: var(--ayvb-line);
+}
+
+.block-oksigeniaayvurenda .ayvb-bar i.on {
+    background: var(--ayvb-mark);
+}
+
+/* In the right column of a wide block the bar stops short of the theme's corner. */
+.block-oksigeniaayvurenda .ayvb[data-size="wide"] > .ayvb-sec:not(:first-child) .ayvb-bar {
+    max-width: 15rem;
+}
+
+/* A teacher's readings: each book of a course against the copies there are. */
+.block-oksigeniaayvurenda .ayvb-read {
+    align-items: start;
+}
+
+.block-oksigeniaayvurenda .ayvb-course {
+    display: inline-block;
+    margin: .25rem 0 .15rem;
+    padding: .05rem .55rem;
+    border-radius: 999px;
+    background: var(--ayvb-tint);
+    color: var(--ayvb-accent);
+    font-size: .78rem;
+    font-weight: 700;
+}
+
+.block-oksigeniaayvurenda .ayvb-read-txt {
+    display: grid;
+    justify-items: start;
+    min-width: 0;
+}
+
+.block-oksigeniaayvurenda .ayvb-read .ayvb-state {
+    font-size: .84rem;
+}
+
+/* The desk: what waits, number first (numbers stay on the left, clear of the theme's corner). */
+.block-oksigeniaayvurenda .ayvb-counts {
+    list-style: none;
+    margin: .55rem 0 .9rem;
+    padding: 0;
+}
+
+.block-oksigeniaayvurenda .ayvb-counts li + li a {
+    border-top: 1px solid var(--ayvb-line);
+}
+
+.block-oksigeniaayvurenda .ayvb-counts a {
+    display: grid;
+    grid-template-columns: 2.4rem minmax(0, 1fr);
+    gap: .55rem;
+    align-items: center;
+    padding: .42rem 0;
+    color: inherit;
+    text-decoration: none;
+}
+
+.block-oksigeniaayvurenda .ayvb-counts b {
+    font-family: var(--ayvb-title);
+    font-weight: 600;
+    font-size: 1.45rem;
+    line-height: 1;
+    color: var(--ayvb-accent);
+    text-align: center;
+}
+
+.block-oksigeniaayvurenda .ayvb-counts .late b {
+    color: var(--ayvb-late);
+}
+
+.block-oksigeniaayvurenda .ayvb-counts span {
+    font-size: .92rem;
+}
+
+.block-oksigeniaayvurenda .ayvb-counts a:hover span {
+    text-decoration: underline;
+}
+
+/* «Listen» says its word only when the block is wide; in a column it is its icon, with its name for screen readers. */
+.block-oksigeniaayvurenda .ayvb:not([data-size="wide"]) .ayvb-listen {
+    padding: .2rem .55rem;
+}
+
+.block-oksigeniaayvurenda .ayvb:not([data-size="wide"]) .ayvb-listen span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+}
+
+/* Narrow (a side column of 300 px or less): smaller portrait and plate, no author line. */
+.block-oksigeniaayvurenda .ayvb[data-size="narrow"] .ayvb-face {
+    width: 2.6rem;
+    height: 2.6rem;
+}
+
+.block-oksigeniaayvurenda .ayvb[data-size="narrow"] .ayvb-pick {
+    grid-template-columns: 3.4rem minmax(0, 1fr);
+    gap: .7rem;
+    padding: .7rem;
+}
+
+.block-oksigeniaayvurenda .ayvb[data-size="narrow"] .ayvb-pick .ayvb-cover {
+    --cw: 3.4rem;
+}
+
+.block-oksigeniaayvurenda .ayvb[data-size="narrow"] .ayvb-author {
+    display: none;
+}
+
+.block-oksigeniaayvurenda .ayvb[data-size="narrow"] .ayvb-book .ayvb-cover {
+    --cw: 2.6rem;
+}
+
+/* Wide (the theme puts the block in the middle): two columns, bigger covers. The first column (on the left) shows the
+ books as a shelf and the desk as tiles; the second keeps rows, with pictures on its left, clear of the theme's corner. */
+.block-oksigeniaayvurenda .ayvb[data-size="wide"] {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    column-gap: 2rem;
+    align-items: start;
+}
+
+.block-oksigeniaayvurenda .ayvb[data-size="wide"] > .ayvb-sec + .ayvb-sec {
+    border-top: 0;
+    padding-top: 0;
+}
+
+.block-oksigeniaayvurenda .ayvb[data-size="wide"] > .ayvb-sec:only-of-type,
+.block-oksigeniaayvurenda .ayvb[data-size="wide"] > .ayvb-actions {
+    grid-column: 1 / -1;
+}
+
+.block-oksigeniaayvurenda .ayvb[data-size="wide"] .ayvb-actions .ayvb-btn {
+    flex: 0 1 auto;
+}
+
+.block-oksigeniaayvurenda .ayvb[data-size="wide"] .ayvb-pick {
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+}
+
+.block-oksigeniaayvurenda .ayvb[data-size="wide"] .ayvb-pick .ayvb-cover {
+    --cw: 5.5rem;
+}
+
+.block-oksigeniaayvurenda .ayvb[data-size="wide"] .ayvb-pick .ayvb-title {
+    font-size: 1.15rem;
+}
+
+.block-oksigeniaayvurenda .ayvb[data-size="wide"] .ayvb-pick .ayvb-cover.drawn i {
+    font-size: .62rem;
+}
+
+.block-oksigeniaayvurenda .ayvb[data-size="wide"] > .ayvb-sec:first-child .ayvb-books {
+    grid-template-columns: repeat(auto-fill, minmax(6.8rem, 1fr));
+    gap: 1rem .9rem;
+}
+
+.block-oksigeniaayvurenda .ayvb[data-size="wide"] > .ayvb-sec:first-child .ayvb-book {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    align-content: start;
+    justify-items: start;
+    gap: .5rem;
+}
+
+.block-oksigeniaayvurenda .ayvb[data-size="wide"] > .ayvb-sec:first-child .ayvb-book .ayvb-cover {
+    --cw: 4.4rem;
+}
+
+.block-oksigeniaayvurenda .ayvb[data-size="wide"] > .ayvb-sec:first-child .ayvb-counts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .6rem;
+}
+
+.block-oksigeniaayvurenda .ayvb[data-size="wide"] > .ayvb-sec:first-child .ayvb-counts a {
+    grid-template-columns: minmax(0, 1fr);
+    gap: .3rem;
+    height: 100%;
+    padding: .75rem .8rem;
+    border: 0;
+    border-radius: 14px;
+    background: var(--ayvb-tint);
+}
+
+.block-oksigeniaayvurenda .ayvb[data-size="wide"] > .ayvb-sec:first-child .ayvb-counts b {
+    text-align: left;
+    font-size: 1.7rem;
+}
+
+.block-oksigeniaayvurenda .ayvb-extra {
+    display: none;
+}
+
+.block-oksigeniaayvurenda .ayvb[data-size="wide"] .ayvb-extra {
+    display: block;
+}
+
+/* Skins. School: the defaults above (cream plates, illustrated covers, round portraits, leaves).
+ Secondary school: the sky. The plate is night green with a few stars, «See the book» in sun. */
+.block-oksigeniaayvurenda .ayvb.skin-secondary .ayvb-face {
+    width: 2.75rem;
+    height: 2.75rem;
+    background: #f2ead8;
+}
+
+.block-oksigeniaayvurenda .ayvb.skin-secondary .ayvb-pick,
+.block-oksigeniaayvurenda .ayvb.skin-secondary .ayvb-shelf {
+    color: #f2eadb;
+    background-color: #0f3a33;
+    /* A few stars, only along the edges, where no text goes. */
+    background-image:
+        radial-gradient(circle at 46% 6%, rgba(246, 206, 110, .9) 0 1.2px, transparent 1.9px),
+        radial-gradient(circle at 90% 7%, rgba(246, 206, 110, .7) 0 1px, transparent 1.6px),
+        radial-gradient(circle at 97% 30%, rgba(236, 228, 212, .55) 0 .9px, transparent 1.4px),
+        radial-gradient(circle at 96% 66%, rgba(246, 206, 110, .6) 0 1.1px, transparent 1.7px),
+        radial-gradient(circle at 58% 95%, rgba(236, 228, 212, .45) 0 .9px, transparent 1.4px),
+        radial-gradient(circle at 84% 94%, rgba(246, 206, 110, .5) 0 .8px, transparent 1.3px);
+    box-shadow: inset 0 0 0 1px rgba(246, 206, 110, .18);
+}
+
+.block-oksigeniaayvurenda .ayvb.skin-secondary .ayvb-pick a.ayvb-title {
+    color: #fbf6ec;
+}
+
+.block-oksigeniaayvurenda .ayvb.skin-secondary .ayvb-author {
+    color: #b9c6c1;
+}
+
+.block-oksigeniaayvurenda .ayvb.skin-secondary .ayvb-pick .ayvb-state.ok {
+    color: #9fe0bf;
+}
+
+.block-oksigeniaayvurenda .ayvb.skin-secondary .ayvb-pick .ayvb-state.short {
+    color: #f6ce6e;
+}
+
+.block-oksigeniaayvurenda .ayvb.skin-secondary .ayvb-pick a.ayvb-btn {
+    background: #f0b43c;
+    color: #1e2b2a;
+    box-shadow: 0 6px 14px -8px rgba(0, 0, 0, .6);
+}
+
+.block-oksigeniaayvurenda .ayvb.skin-secondary .ayvb-shelf::after {
+    background: linear-gradient(#24564b, #173f37);
+}
+
+/* University or academy, and company: the font the adult already uses (the theme's); plain. */
+.block-oksigeniaayvurenda .ayvb.skin-university,
+.block-oksigeniaayvurenda .ayvb.skin-company {
+    font-family: inherit;
+}
+
+.block-oksigeniaayvurenda .ayvb.skin-university .ayvb-line,
+.block-oksigeniaayvurenda .ayvb.skin-company .ayvb-line {
+    font-size: .92rem;
+}
+
+.block-oksigeniaayvurenda .ayvb.skin-university .ayvb-face {
+    width: 2.1rem;
+    height: 2.1rem;
+    background: var(--ayvb-hole);
+    box-shadow: none;
+}
+
+/* University: the suggested book as a catalogue card, with the hole for the rod. */
+.block-oksigeniaayvurenda .ayvb.skin-university .ayvb-pick {
+    position: relative;
+    padding: .85rem .85rem 1.2rem;
+    border: 1px solid var(--ayvb-line);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--ayvb-ink);
+}
+
+.block-oksigeniaayvurenda .ayvb.skin-university .ayvb-pick::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: .38rem;
+    width: .55rem;
+    height: .55rem;
+    margin-left: -.275rem;
     border-radius: 50%;
-    object-fit: cover;
-    object-position: top;
+    background: var(--ayvb-hole);
+    box-shadow: inset 0 0 0 1px var(--ayvb-line);
+}
+
+.block-oksigeniaayvurenda .ayvb.skin-university .ayvb-pick a.ayvb-title,
+.block-oksigeniaayvurenda .ayvb.skin-company .ayvb-pick a.ayvb-title {
+    color: var(--ayvb-ink);
+}
+
+.block-oksigeniaayvurenda .ayvb.skin-university .ayvb-author,
+.block-oksigeniaayvurenda .ayvb.skin-company .ayvb-author {
+    color: var(--ayvb-muted);
+}
+
+.block-oksigeniaayvurenda .ayvb.skin-university .ayvb-pick .ayvb-state.ok,
+.block-oksigeniaayvurenda .ayvb.skin-company .ayvb-pick .ayvb-state.ok {
+    color: var(--ayvb-ok);
+}
+
+.block-oksigeniaayvurenda .ayvb.skin-university .ayvb-pick .ayvb-state.short,
+.block-oksigeniaayvurenda .ayvb.skin-company .ayvb-pick .ayvb-state.short {
+    color: var(--ayvb-short);
+}
+
+.block-oksigeniaayvurenda .ayvb.skin-university .ayvb-pick a.ayvb-btn,
+.block-oksigeniaayvurenda .ayvb.skin-company .ayvb-pick a.ayvb-btn {
+    background: transparent;
+    color: var(--ayvb-accent);
+    box-shadow: inset 0 0 0 1.5px var(--ayvb-ring);
+}
+
+.block-oksigeniaayvurenda .ayvb.skin-university .ayvb-shelf,
+.block-oksigeniaayvurenda .ayvb.skin-company .ayvb-shelf {
+    padding: 0;
+    background: transparent;
+}
+
+.block-oksigeniaayvurenda .ayvb.skin-university .ayvb-shelf::after,
+.block-oksigeniaayvurenda .ayvb.skin-company .ayvb-shelf::after {
+    display: none;
+}
+
+.block-oksigeniaayvurenda .ayvb.skin-university .ayvb-shelf-row,
+.block-oksigeniaayvurenda .ayvb.skin-company .ayvb-shelf-row {
+    padding-bottom: .2rem;
+}
+
+/* Company: no characters and no play; ink instead of green. */
+.block-oksigeniaayvurenda .ayvb.skin-company {
+    --ayvb-accent: #24302e;
+    --ayvb-btn: #24302e;
+    --ayvb-btn-shadow: 0 6px 14px -9px rgba(0, 0, 0, .6);
+    --ayvb-ring: rgba(36, 48, 46, .38);
+    --ayvb-tint: rgba(36, 48, 46, .06);
+}
+
+html[data-bs-theme="dark"] .block-oksigeniaayvurenda .ayvb.skin-company {
+    --ayvb-accent: #e3ddd0;
+    --ayvb-btn: #e3ddd0;
+    --ayvb-btn-ink: #16201e;
+    --ayvb-ring: rgba(227, 221, 208, .42);
+    --ayvb-tint: rgba(227, 221, 208, .08);
+}
+
+.block-oksigeniaayvurenda .ayvb.skin-company .ayvb-pick {
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--ayvb-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .block-oksigeniaayvurenda .ayvb-btn {
+        transition: none;
+    }
+
+    .block-oksigeniaayvurenda .ayvb-btn:hover {
+        transform: none;
+    }
 }

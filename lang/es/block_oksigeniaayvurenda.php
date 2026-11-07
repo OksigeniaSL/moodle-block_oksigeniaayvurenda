@@ -24,20 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['card'] = 'Mi carné';
-$string['desk'] = 'Mostrador';
-$string['due'] = 'hasta el {$a}';
-$string['golibrary'] = 'Ir a la biblioteca';
-$string['holds'] = 'Apartados o en camino';
-$string['late'] = 'con retraso: era hasta el {$a}';
-$string['loans'] = 'Tus libros';
-$string['none'] = 'No tienes libros prestados.';
 $string['oksigeniaayvurenda:addinstance'] = 'Añadir el bloque de la biblioteca';
 $string['oksigeniaayvurenda:myaddinstance'] = 'Añadir el bloque de la biblioteca al área personal';
 $string['pluginname'] = 'Biblioteca';
 $string['privacy:metadata'] = 'El bloque de la biblioteca no guarda datos personales: muestra lo que guarda la biblioteca.';
-$string['ready'] = 'te espera hasta el {$a}';
-$string['renew'] = 'Ampliar';
-$string['spring'] = 'Ayvu rande';
-$string['waiting'] = 'esperas tu turno';
-$string['waitingahead'] = 'esperas tu turno: {$a} delante';

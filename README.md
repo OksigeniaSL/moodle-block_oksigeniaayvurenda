@@ -5,17 +5,20 @@
 ![Status](https://img.shields.io/badge/status-beta-yellow)
 
 A block for Moodle that brings [Oksigenia Ayvurenda](https://github.com/OksigeniaSL/moodle-local_oksigeniaayvurenda),
-online library management, to the personal area, the site's front page or a course: for each reader, the books they have out
-and until when (the late ones marked), the books set aside for them or that they are waiting for, and the ways in:
-the library, their card and Ayvu rande, the voices of the library. Someone who is not a reader but may use the
-library (staff, teachers, the site's admins) gets the way into it, and into its desk if they lend; anyone else, nothing.
+online library management, to the personal area, the site's front page or a course, with something to look at every day.
+With nothing on loan, the memory's idea of the day with its book, the book of the week or what just arrived. With books at
+home, each with its cover and when it goes back, in words («Back on Thursday»), what waits at the desk and «Renew» where
+the library allows it. By who is looking, their class's challenge, their own goal for the year, the readings of their
+courses against their students or, for whoever lends, what waits at the desk. In the tone of each library (school,
+secondary school, university or company), light and dark, in a column or wide. Someone who is no reader but may use the
+library gets the way in; nobody else, anything.
 
 [Leer en español](README.es.md)
 
 ## Requirements
 
 - Moodle 4.5 to 5.3.
-- Oksigenia Ayvurenda (`local_oksigeniaayvurenda`) 0.27.0 or later.
+- Oksigenia Ayvurenda (`local_oksigeniaayvurenda`) 0.196.0 or later.
 
 ## Installation
 

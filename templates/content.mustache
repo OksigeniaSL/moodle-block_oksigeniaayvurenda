@@ -16,51 +16,131 @@
 {{!
     @template block_oksigeniaayvurenda/content
 
-    What a reader has in the library, and the ways in.
+    The library on the personal area, inside the theme's own block frame: for each centre, what it tells today (the
+    memory's idea, the book of the week or what just came) or the reader's books with when they go back, then the class
+    challenge, their own goal, the readings of their courses or what waits at the desk, and the way in. Gaudí's mock-up
+    of 7 November 2026 (block 0.2.0).
+
+    Context variables required for this template:
+    * centres - one per centre: name, showname, skin, sections, home, golabel, gofirst, card, cardlabel, leaf, star
+    * sections - each with one of desk, books, tell, challenge, goal or readings, and first and extra
 
     Example context (json):
     {
-        "loansheading": "Tus libros", "holdsheading": "Apartados o en camino", "none": "No tienes libros prestados.",
-        "golibrarylabel": "Ir a la biblioteca", "cardlabel": "Mi carné", "springlabel": "Ayvu rande",
-        "libraries": [{"name": "Biblioteca", "showname": false, "home": "#", "card": "#", "spring": "#",
-            "hasloans": true, "textbooks": "", "loans": [{"title": "El faro dormido", "url": "#", "when": "hasta el 3 nov", "late": false,
-                "canrenew": true, "loanid": 7}],
-            "hasholds": true, "holds": [{"title": "La sal del mar", "url": "#", "when": "te espera hasta el 30 oct", "ready": true}]}],
-        "hasvisits": false, "visits": [], "desklabel": "Mostrador", "renewaction": "#", "renewlabel": "Ampliar",
-        "renewback": "#", "sesskey": "x"
+        "centres": [{
+            "name": "Biblioteca", "showname": false, "skin": "school", "home": "https://example.com/index.php",
+            "golabel": "Ir a la biblioteca", "gofirst": true, "card": "https://example.com/card.php", "cardlabel": "Mi carné",
+            "leaf": true, "star": false,
+            "sections": [
+                {"first": true, "extra": false, "tell": {"face": "https://example.com/memoria.webp", "heading": "La idea de hoy",
+                    "line": "Como te encantó «Pepa y el volcán», creo que este también te va a gustar.",
+                    "pick": {"cover": {"img": "https://example.com/cover.jpg", "drawn": "dc-green", "title": "Mapas de mar"},
+                        "title": "Mapas de mar", "author": "Javier Molina", "url": "https://example.com/record.php",
+                        "state": "Libre, en su estantería", "ok": true, "label": "Ver el libro"},
+                    "search": null, "shelf": null, "sign": ""} },
+                {"first": false, "extra": false, "challenge": {"heading": "El reto de tu clase", "count": "4 de 6",
+                    "marks": [{"on": true}, {"on": false}], "stars": false, "text": "Libros de seis rincones distintos, entre todos",
+                    "meton": ""} }
+            ]
+        }]
     }
 }}
 <div class="block-oksigeniaayvurenda">
-{{#libraries}}
-    {{#showname}}<p class="block-oksigeniaayvurenda-name">{{name}}</p>{{/showname}}
-    {{#notice}}<p class="block-oksigeniaayvurenda-late">{{notice}}</p>{{/notice}}
-    {{#remembers}}
-    <p class="block-oksigeniaayvurenda-memory">{{#portrait}}<img src="{{portrait}}" alt="" width="40" height="40">{{/portrait}}<span>{{text}} <a href="{{url}}">{{label}}</a></span></p>
-    {{/remembers}}
-    <p class="block-oksigeniaayvurenda-heading">{{loansheading}}</p>
-    {{^hasloans}}{{^textbooks}}<p class="block-oksigeniaayvurenda-none">{{none}}</p>{{/textbooks}}{{/hasloans}}
-    {{#hasloans}}
-    <ul class="block-oksigeniaayvurenda-list">
-        {{#loans}}<li{{#late}} class="block-oksigeniaayvurenda-late"{{/late}}><a href="{{url}}">{{title}}</a> <span>{{when}}</span>
-            {{#canrenew}}<form class="block-oksigeniaayvurenda-renew" method="post" action="{{renewaction}}"><input type="hidden" name="sesskey" value="{{sesskey}}"><input type="hidden" name="loan" value="{{loanid}}"><input type="hidden" name="returnurl" value="{{renewback}}"><button type="submit" class="btn btn-link btn-sm p-0">{{renewlabel}}</button></form>{{/canrenew}}</li>{{/loans}}
-    </ul>
-    {{/hasloans}}
-    {{#textbooks}}<p class="block-oksigeniaayvurenda-none">{{textbooks}}</p>{{/textbooks}}
-    {{#hasholds}}
-    <p class="block-oksigeniaayvurenda-heading">{{holdsheading}}</p>
-    <ul class="block-oksigeniaayvurenda-list">
-        {{#holds}}<li{{#ready}} class="block-oksigeniaayvurenda-ready"{{/ready}}><a href="{{url}}">{{title}}</a> <span>{{when}}</span></li>{{/holds}}
-    </ul>
-    {{/hasholds}}
-    <p class="block-oksigeniaayvurenda-links"><a class="btn btn-primary btn-sm" href="{{home}}">{{golibrarylabel}}</a>
-        <a class="btn btn-secondary btn-sm" href="{{card}}">{{cardlabel}}</a>
-        <a class="btn btn-secondary btn-sm" href="{{spring}}">{{springlabel}}</a></p>
-{{/libraries}}
-{{#hasvisits}}
-    {{#visits}}
-    <p class="block-oksigeniaayvurenda-name">{{name}}</p>
-    <p class="block-oksigeniaayvurenda-links"><a class="btn btn-primary btn-sm" href="{{home}}">{{golibrarylabel}}</a>
-        {{#desk}}<a class="btn btn-secondary btn-sm" href="{{desk}}">{{desklabel}}</a>{{/desk}}</p>
-    {{/visits}}
-{{/hasvisits}}
+{{#centres}}
+<div class="ayvb skin-{{skin}}" data-ayvb>
+    {{#showname}}<p class="ayvb-name">{{name}}</p>{{/showname}}
+    {{#sections}}
+    <section class="ayvb-sec{{#extra}} ayvb-extra{{/extra}}">
+        {{#desk}}
+        <h3 class="ayvb-h">{{heading}}</h3>
+        {{#libraries}}
+        {{#many}}<p class="ayvb-small ayvb-deskname">{{name}}</p>{{/many}}
+        {{#uptodate}}<p class="ayvb-small">{{uptodate}}</p>{{/uptodate}}
+        <ul class="ayvb-counts">
+            {{#rows}}<li{{#late}} class="late"{{/late}}><a href="{{url}}"><b>{{number}}</b><span>{{label}}</span></a></li>{{/rows}}
+        </ul>
+        <a class="btn ayvb-btn" href="{{desk}}">{{desklabel}}</a>
+        {{/libraries}}
+        {{/desk}}
+        {{#books}}
+        <h3 class="ayvb-h">{{heading}}{{#count}}<span class="ayvb-count" aria-label="{{countlabel}}">{{count}}</span>{{/count}}</h3>
+        {{#notice}}<p class="ayvb-due late">{{notice}}</p>{{/notice}}
+        {{#hasitems}}
+        <ul class="ayvb-books">
+            {{#items}}
+            <li class="ayvb-book">
+                {{#cover}}{{#img}}<span class="ayvb-cover sm"><img src="{{img}}" alt=""></span>{{/img}}{{^img}}<span class="ayvb-cover sm drawn {{drawn}}"><i>{{title}}</i></span>{{/img}}{{/cover}}
+                <div>
+                    <a class="ayvb-title" href="{{url}}">{{title}}</a>
+                    {{#late}}<p class="ayvb-due late" title="{{datetitle}}">{{late}}</p>{{/late}}
+                    {{#ready}}<p class="ayvb-due ready">{{ready}}</p>{{/ready}}
+                    {{#waiting}}<p class="ayvb-due">{{waiting}}</p>{{/waiting}}
+                    {{#due}}<div class="ayvb-due"><span title="{{datetitle}}">{{due}}</span>{{#renew}}<form method="post" action="{{renewaction}}"><input type="hidden" name="sesskey" value="{{sesskey}}"><input type="hidden" name="loan" value="{{loan}}"><input type="hidden" name="returnurl" value="{{back}}"><button type="submit" class="ayvb-renew" title="{{title}}">{{label}}</button></form>{{/renew}}</div>{{/due}}
+                </div>
+            </li>
+            {{/items}}
+        </ul>
+        {{/hasitems}}
+        {{#note}}<p class="ayvb-small">{{note}}</p>{{/note}}
+        {{#textbooks}}<p class="ayvb-small">{{textbooks}}</p>{{/textbooks}}
+        {{/books}}
+        {{#tell}}
+        <div class="ayvb-say{{^face}} no-face{{/face}}">
+            {{#face}}<img class="ayvb-face" src="{{face}}" alt="">{{/face}}
+            <div><h3 class="ayvb-h">{{heading}}</h3>{{#line}}<p class="ayvb-line">{{line}}</p>{{/line}}</div>
+        </div>
+        {{#pick}}
+        <div class="ayvb-pick">
+            {{#cover}}{{#img}}<span class="ayvb-cover md"><img src="{{img}}" alt=""></span>{{/img}}{{^img}}<span class="ayvb-cover md drawn {{drawn}}"><i>{{title}}</i></span>{{/img}}{{/cover}}
+            <div class="ayvb-pick-txt">
+                <a class="ayvb-title" href="{{url}}">{{title}}</a>
+                {{#author}}<span class="ayvb-author">{{author}}</span>{{/author}}
+                <span class="ayvb-state {{#ok}}ok{{/ok}}{{^ok}}short{{/ok}}">{{state}}</span>
+                <span class="ayvb-pick-do"><a class="btn ayvb-btn ayvb-btn-sm" href="{{url}}">{{label}}</a></span>
+            </div>
+        </div>
+        {{/pick}}
+        {{#search}}<p class="ayvb-pick-do"><a class="btn ayvb-btn ayvb-btn-sm" href="{{url}}">{{label}}</a></p>{{/search}}
+        {{#shelf}}
+        <div class="ayvb-shelf"><div class="ayvb-shelf-row">
+            {{#books}}<a href="{{url}}" title="{{title}}" aria-label="{{title}}">{{#cover}}{{#img}}<span class="ayvb-cover"><img src="{{img}}" alt=""></span>{{/img}}{{^img}}<span class="ayvb-cover drawn {{drawn}}"><i>{{title}}</i></span>{{/img}}{{/cover}}</a>{{/books}}
+        </div></div>
+        <div class="ayvb-shelf-do"><a class="ayvb-more" href="{{more}}">{{morelabel}}</a></div>
+        {{/shelf}}
+        {{#sign}}<p class="ayvb-sign">{{sign}}</p>{{/sign}}
+        {{/tell}}
+        {{#challenge}}
+        <div class="ayvb-goal-top"><h3 class="ayvb-h">{{heading}}</h3><span class="ayvb-goal-n">{{count}}</span></div>
+        <div class="ayvb-marks{{#stars}} stars{{/stars}}" role="img" aria-label="{{count}}">
+            {{#marks}}{{#stars}}<svg viewBox="0 0 24 24" aria-hidden="true"><path class="{{#on}}on{{/on}}{{^on}}off{{/on}}" d="M12 2.8l2.3 6.9 6.9 2.3-6.9 2.3L12 21.2l-2.3-6.9L2.8 12l6.9-2.3z"/></svg>{{/stars}}{{^stars}}<svg viewBox="0 0 24 24" aria-hidden="true"><path class="{{#on}}on{{/on}}{{^on}}off{{/on}}" d="M4.5 19.5C4.5 10.6 10.4 4.7 19.8 4.2c-.4 9.4-6.3 15.3-15.3 15.3z"/>{{#on}}<path d="M5.5 18.5 14 10" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.3" stroke-linecap="round"/>{{/on}}</svg>{{/stars}}{{/marks}}
+        </div>
+        <p class="ayvb-small">{{text}}</p>
+        {{#meton}}<p class="ayvb-small">{{meton}}</p>{{/meton}}
+        {{/challenge}}
+        {{#goal}}
+        <div class="ayvb-goal-top"><h3 class="ayvb-h">{{heading}}</h3><span class="ayvb-goal-n">{{count}}</span></div>
+        <div class="ayvb-bar ayvb-bar-{{steps}}" role="img" aria-label="{{count}}">{{#bar}}<i{{#on}} class="on"{{/on}}></i>{{/bar}}</div>
+        <p class="ayvb-small">{{text}}</p>
+        {{/goal}}
+        {{#readings}}
+        <h3 class="ayvb-h">{{heading}}</h3>
+        <ul class="ayvb-reads">
+            {{#rows}}
+            <li class="ayvb-read">
+                {{#cover}}{{#img}}<span class="ayvb-cover xs"><img src="{{img}}" alt=""></span>{{/img}}{{^img}}<span class="ayvb-cover xs drawn {{drawn}}"><i>{{title}}</i></span>{{/img}}{{/cover}}
+                <div class="ayvb-read-txt"><a class="ayvb-title" href="{{url}}">{{title}}</a><span class="ayvb-course">{{course}}</span>
+                    <span class="ayvb-state {{#ok}}ok{{/ok}}{{^ok}}short{{/ok}}">{{state}}</span></div>
+            </li>
+            {{/rows}}
+        </ul>
+        {{#more}}<a class="ayvb-more" href="{{more}}">{{morelabel}}</a>{{/more}}
+        {{/readings}}
+    </section>
+    {{/sections}}
+    <div class="ayvb-actions">
+        <a class="btn ayvb-btn{{^gofirst}} ayvb-btn-quiet{{/gofirst}}" href="{{home}}">{{golabel}}</a>
+        {{#card}}<a class="btn ayvb-btn ayvb-btn-quiet" href="{{card}}">{{#leaf}}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21v-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 14c-4.5 0-6.5-2.6-6.5-6 3.6 0 6.5 2 6.5 6zM12 12c0-4 2.4-6.5 6.5-6.5 0 3.8-2.4 6.5-6.5 6.5z" fill="currentColor"/></svg>{{/leaf}}{{#star}}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.2 7.3 7.3 2.2-7.3 2.2L12 21.5l-2.2-7.3L2.5 12l7.3-2.2z" fill="currentColor"/></svg>{{/star}}{{cardlabel}}</a>{{/card}}
+    </div>
+</div>
+{{/centres}}
 </div>

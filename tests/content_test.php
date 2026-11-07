@@ -28,7 +28,8 @@ namespace block_oksigeniaayvurenda;
 #[\PHPUnit\Framework\Attributes\CoversClass(content::class)]
 final class content_test extends \advanced_testcase {
     /**
-     * A reader sees their books out, the late ones marked, with the ways in; someone who is no reader sees nothing.
+     * A reader sees their books out, the late ones in words, with the ways in; with nothing out, what the library tells
+     * them; someone who is no reader gets the way in, and the desk where they lend; nothing for anyone else.
      */
     public function test_for_user(): void {
         global $DB, $OUTPUT;
@@ -41,33 +42,38 @@ final class content_test extends \advanced_testcase {
         $reader = $gen->create_reader(['entityid' => $library->entityid, 'userid' => $ana->id, 'readertype' => 'student']);
         $record = $gen->create_record(['entityid' => $library->entityid, 'title' => 'El faro dormido']);
         $item = $gen->create_item(['entityid' => $library->entityid, 'libraryid' => $library->id, 'recordid' => $record->id]);
-        $gen->create_loan(['libraryid' => $library->id, 'itemid' => $item->id, 'readerid' => $reader->id,
-            'timedue' => $now - DAYSECS]);
+        $loan = $gen->create_loan(['libraryid' => $library->id, 'itemid' => $item->id, 'readerid' => $reader->id,
+            'timedue' => $now - 3 * DAYSECS]);
 
         $data = content::for_user((int) $ana->id, $now);
-        $this->assertCount(1, $data['libraries']);
-        $loan = $data['libraries'][0]['loans'][0];
-        $this->assertSame('El faro dormido', $loan['title']);
-        $this->assertTrue($loan['late']);
+        $this->assertCount(1, $data['centres']);
+        $books = array_values(array_filter(array_column($data['centres'][0]['sections'], 'books')))[0];
+        $this->assertSame('El faro dormido', $books['items'][0]['title']);
+        $this->assertNotSame('', $books['items'][0]['late']);
         $html = $OUTPUT->render_from_template('block_oksigeniaayvurenda/content', $data);
-        $this->assertStringContainsString('block-oksigeniaayvurenda-late', $html);
+        $this->assertStringContainsString('ayvb-due late', $html);
         $this->assertStringContainsString('card.php', $html);
-        // The button says its word, not the address of the card.
-        $this->assertStringContainsString('>' . get_string('card', 'block_oksigeniaayvurenda') . '</a>', $html);
-        // Renewing from here only where the library lets its readers.
+        // Renewing from here only where the library lets its readers, and never a late one.
         $this->assertStringNotContainsString('renew.php', $html);
+        $DB->set_field('local_oksigeniaayvurenda_loan', 'timedue', $now + 3 * DAYSECS, ['id' => $loan->id]);
         \local_oksigeniaayvurenda\local\holds::save_settings((int) $library->entityid, ['renewonline' => true]);
         $html = $OUTPUT->render_from_template('block_oksigeniaayvurenda/content', content::for_user((int) $ana->id, $now));
         $this->assertStringContainsString('renew.php', $html);
-        $this->assertStringContainsString('>' . get_string('renew', 'block_oksigeniaayvurenda') . '</button>', $html);
-        // Someone who is no reader but may use the library gets its way in; the admin, its desk too.
+        $this->assertStringContainsString('ayvb-renew', $html);
+        // With nothing out, what came last to the library, instead of «you have nothing».
+        $DB->set_field('local_oksigeniaayvurenda_loan', 'timereturned', $now, ['id' => $loan->id]);
+        $sections = content::for_user((int) $ana->id, $now)['centres'][0]['sections'];
+        $this->assertNotEmpty(array_filter(array_column($sections, 'tell')));
+        // Someone who is no reader but may use the library gets its way in, without a desk; the admin, its desk too.
         $teacher = $this->getDataGenerator()->create_user();
-        $visit = content::for_user((int) $teacher->id, $now);
-        $this->assertSame([], $visit['libraries']);
-        $this->assertStringContainsString('index.php', $visit['visits'][0]['home']);
-        $this->assertSame('', $visit['visits'][0]['desk']);
-        $this->assertStringContainsString('desk.php', content::for_user((int) get_admin()->id, $now)['visits'][0]['desk']);
-        // Whoever keeps a classroom library gets it with its desk, though it hangs from another.
+        $visit = content::for_user((int) $teacher->id, $now)['centres'][0];
+        $this->assertStringContainsString('index.php', $visit['home']);
+        $this->assertSame('', $visit['card']);
+        $this->assertEmpty(array_filter(array_column($visit['sections'], 'desk')));
+        $admin = content::for_user((int) get_admin()->id, $now)['centres'][0];
+        $desk = array_values(array_filter(array_column($admin['sections'], 'desk')))[0];
+        $this->assertStringContainsString('desk.php', $desk['libraries'][0]['desk']);
+        // Whoever keeps a classroom library gets its desk, though it hangs from another.
         $room = $gen->create_library(['entityid' => $library->entityid, 'name' => 'Aula de 3.º', 'kind' => 'classroom',
             'parentid' => $library->id]);
         $DB->insert_record('local_oksigeniaayvurenda_keeper', ['libraryid' => $room->id, 'userid' => $teacher->id,
@@ -75,16 +81,15 @@ final class content_test extends \advanced_testcase {
         \cache::make('local_oksigeniaayvurenda', 'access')->purge();
         $gen->create_reader(['entityid' => $library->entityid, 'userid' => $teacher->id, 'readertype' => 'teacher']);
         \cache::make('local_oksigeniaayvurenda', 'access')->purge();
-        $keeper = content::for_user((int) $teacher->id, $now);
-        $this->assertCount(1, $keeper['libraries'], 'a keeper is a reader, with their own books');
-        $kept = array_column($keeper['visits'], 'desk', 'name');
-        $this->assertStringContainsString('desk.php', $kept['Aula de 3.º']);
-        $this->assertArrayNotHasKey($library->name, $kept);
+        $keeper = content::for_user((int) $teacher->id, $now)['centres'][0];
+        $this->assertNotSame('', $keeper['card'], 'a keeper is a reader too');
+        $desk = array_values(array_filter(array_column($keeper['sections'], 'desk')))[0];
+        $this->assertSame(['Aula de 3.º'], array_column($desk['libraries'], 'name'));
         // A library getting ready for its staff only: neither its reader nor anyone else sees it; its admin does.
         \local_oksigeniaayvurenda\local\access::set_closed((int) $library->entityid, true);
         $this->assertNull(content::for_user((int) $ana->id, $now));
         $this->assertNull(content::for_user((int) $teacher->id, $now));
-        $this->assertNotEmpty(content::for_user((int) get_admin()->id, $now)['visits']);
+        $this->assertNotEmpty(content::for_user((int) get_admin()->id, $now)['centres']);
         \local_oksigeniaayvurenda\local\access::set_closed((int) $library->entityid, false);
         // Without the right to look at the library, nothing.
         $users = $DB->get_record('role', ['shortname' => 'user']);
