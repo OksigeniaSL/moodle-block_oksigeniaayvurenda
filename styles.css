@@ -58,6 +58,55 @@
     grid-column: 1 / -1;
 }
 
+/* The ways in, once, at the end of the block. */
+.block-oksigeniaayvurenda .ayvb.ayvb-end {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+}
+
+.block-oksigeniaayvurenda .ayvb + .ayvb.ayvb-end {
+    margin-top: 1.1rem;
+}
+
+.block-oksigeniaayvurenda .ayvb-name a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.block-oksigeniaayvurenda .ayvb-name a:hover {
+    text-decoration: underline;
+}
+
+/* Several desks: a row each, its name and what waits, and its button. */
+.block-oksigeniaayvurenda .ayvb-desks {
+    list-style: none;
+    margin: .55rem 0 0;
+    padding: 0;
+}
+
+.block-oksigeniaayvurenda .ayvb-desks li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: .4rem .8rem;
+    align-items: center;
+    padding: .55rem 0;
+}
+
+.block-oksigeniaayvurenda .ayvb-desks li + li {
+    border-top: 1px solid var(--ayvb-line);
+}
+
+.block-oksigeniaayvurenda .ayvb-desks li > div {
+    display: grid;
+    min-width: 0;
+}
+
+.block-oksigeniaayvurenda .ayvb-small.late {
+    color: var(--ayvb-late);
+    font-weight: 700;
+}
+
 /* The library on the personal area (block 0.2.0, from Gaudí's mock-up). Everything hangs from .ayvb, inside the theme's
  own block frame (title, border, card). Text, lines and surfaces take the theme's variables; the library's own things
  (cream plates, covers, Literata titles, pill buttons) keep Ayvurenda's colours, in light and dark alike. No container
@@ -504,7 +553,8 @@ html[data-bs-theme="dark"] .block-oksigeniaayvurenda .ayvb {
 .block-oksigeniaayvurenda .ayvb-shelf-row a {
     display: block;
     flex: 0 1 auto;
-    width: min(4.6rem, calc((100% - 1.2rem) / 3));
+    width: calc((100% - 1.2rem) / 3);
+    max-width: 4.6rem;
     text-decoration: none;
 }
 
@@ -986,19 +1036,6 @@ html[data-bs-theme="dark"] .block-oksigeniaayvurenda .ayvb {
     border-radius: 10px;
     background: transparent;
     color: var(--ayvb-ink);
-}
-
-.block-oksigeniaayvurenda .ayvb.skin-university .ayvb-pick::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: .38rem;
-    width: .55rem;
-    height: .55rem;
-    margin-left: -.275rem;
-    border-radius: 50%;
-    background: var(--ayvb-hole);
-    box-shadow: inset 0 0 0 1px var(--ayvb-line);
 }
 
 .block-oksigeniaayvurenda .ayvb.skin-university .ayvb-pick a.ayvb-title,

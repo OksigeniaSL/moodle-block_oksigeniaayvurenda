@@ -66,13 +66,12 @@ final class content_test extends \advanced_testcase {
         $this->assertNotEmpty(array_filter(array_column($sections, 'tell')));
         // Someone who is no reader but may use the library gets its way in, without a desk; the admin, its desk too.
         $teacher = $this->getDataGenerator()->create_user();
-        $visit = content::for_user((int) $teacher->id, $now)['centres'][0];
+        $visit = content::for_user((int) $teacher->id, $now);
         $this->assertStringContainsString('index.php', $visit['home']);
         $this->assertSame('', $visit['card']);
-        $this->assertEmpty(array_filter(array_column($visit['sections'], 'desk')));
-        $admin = content::for_user((int) get_admin()->id, $now)['centres'][0];
-        $desk = array_values(array_filter(array_column($admin['sections'], 'desk')))[0];
-        $this->assertStringContainsString('desk.php', $desk['libraries'][0]['desk']);
+        $this->assertNull($visit['desk']);
+        $admin = content::for_user((int) get_admin()->id, $now);
+        $this->assertStringContainsString('desk.php', $admin['desk']['one']['desk']);
         // Whoever keeps a classroom library gets its desk, though it hangs from another.
         $room = $gen->create_library(['entityid' => $library->entityid, 'name' => 'Aula de 3.º', 'kind' => 'classroom',
             'parentid' => $library->id]);
@@ -81,15 +80,20 @@ final class content_test extends \advanced_testcase {
         \cache::make('local_oksigeniaayvurenda', 'access')->purge();
         $gen->create_reader(['entityid' => $library->entityid, 'userid' => $teacher->id, 'readertype' => 'teacher']);
         \cache::make('local_oksigeniaayvurenda', 'access')->purge();
-        $keeper = content::for_user((int) $teacher->id, $now)['centres'][0];
+        $keeper = content::for_user((int) $teacher->id, $now);
         $this->assertNotSame('', $keeper['card'], 'a keeper is a reader too');
-        $desk = array_values(array_filter(array_column($keeper['sections'], 'desk')))[0];
-        $this->assertSame(['Aula de 3.º'], array_column($desk['libraries'], 'name'));
+        $this->assertSame('Aula de 3.º', $keeper['desk']['one']['name']);
+        // Whoever lends at two desks gets a row for each, and the buttons once.
+        $admin = content::for_user((int) get_admin()->id, $now);
+        $this->assertTrue($admin['desk']['hasmany']);
+        $this->assertCount(2, $admin['desk']['many']);
+        $html = $OUTPUT->render_from_template('block_oksigeniaayvurenda/content', $admin);
+        $this->assertSame(1, substr_count($html, 'ayvb-actions'));
         // A library getting ready for its staff only: neither its reader nor anyone else sees it; its admin does.
         \local_oksigeniaayvurenda\local\access::set_closed((int) $library->entityid, true);
         $this->assertNull(content::for_user((int) $ana->id, $now));
         $this->assertNull(content::for_user((int) $teacher->id, $now));
-        $this->assertNotEmpty(content::for_user((int) get_admin()->id, $now)['centres']);
+        $this->assertNotNull(content::for_user((int) get_admin()->id, $now)['desk']);
         \local_oksigeniaayvurenda\local\access::set_closed((int) $library->entityid, false);
         // Without the right to look at the library, nothing.
         $users = $DB->get_record('role', ['shortname' => 'user']);
