@@ -24,7 +24,8 @@
     Context variables required for this template:
     * desk - what waits at the desk: one library with its numbers (one), or several a row each (many)
     * centres - one per centre: name, showname, skin, home and sections
-    * sections - each with one of books, tell, challenge, goal or readings, and first and extra
+    * sections - each with one of books, tell, challenge, goal, readings or pulse (the library this week, for whoever
+      runs it), and first and extra
     * skin, home, golabel, gofirst, card, cardlabel, leaf, star - the ways in, once, at the end
 
     Example context (json):
@@ -145,6 +146,13 @@
         </ul>
         {{#more}}<a class="ayvb-more" href="{{more}}">{{morelabel}}</a>{{/more}}
         {{/readings}}
+        {{#pulse}}
+        <h3 class="ayvb-h">{{heading}}</h3>
+        <ul class="ayvb-counts">
+            {{#rows}}<li><a href="{{url}}"><b>{{number}}</b><span>{{label}}</span></a></li>{{/rows}}
+        </ul>
+        {{#line}}<p class="ayvb-small">{{line}}</p>{{/line}}
+        {{/pulse}}
     </section>
     {{/sections}}
 </div>
