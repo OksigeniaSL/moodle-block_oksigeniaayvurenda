@@ -798,6 +798,34 @@ html[data-bs-theme="dark"] .block-oksigeniaayvurenda .ayvb {
     font-size: .84rem;
 }
 
+/* What there is to celebrate: a line each, with a small round mark. */
+.block-oksigeniaayvurenda .ayvb-moments {
+    list-style: none;
+    margin: .3rem 0 0;
+    padding: 0;
+}
+
+.block-oksigeniaayvurenda .ayvb-moments li {
+    position: relative;
+    padding-left: 1.1rem;
+    font-size: .95rem;
+}
+
+.block-oksigeniaayvurenda .ayvb-moments li + li {
+    margin-top: .35rem;
+}
+
+.block-oksigeniaayvurenda .ayvb-moments li::before {
+    content: "";
+    position: absolute;
+    left: .15rem;
+    top: .5em;
+    width: .45rem;
+    height: .45rem;
+    border-radius: 50%;
+    background: var(--ayvb-accent);
+}
+
 /* The desk: what waits, number first (numbers stay on the left, clear of the theme's corner). */
 .block-oksigeniaayvurenda .ayvb-counts {
     list-style: none;

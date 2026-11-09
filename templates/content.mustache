@@ -24,8 +24,8 @@
     Context variables required for this template:
     * desk - what waits at the desk: one library with its numbers (one), or several a row each (many)
     * centres - one per centre: name, showname, skin, home and sections
-    * sections - each with one of books, tell, challenge, goal, readings or pulse (the library this week, for whoever
-      runs it), and first and extra
+    * sections - each with one of books, tell, challenge, goal, readings, moments (what there is to celebrate) or pulse
+      (the library this week, for whoever runs it), and first and extra
     * skin, home, golabel, gofirst, card, cardlabel, leaf, star - the ways in, once, at the end
 
     Example context (json):
@@ -43,7 +43,10 @@
                     "search": null, "shelf": null, "sign": ""} },
                 {"first": false, "extra": false, "challenge": {"heading": "El reto de tu clase", "count": "4 de 6",
                     "marks": [{"on": true}, {"on": false}], "stars": false, "text": "Libros de seis rincones distintos, entre todos",
-                    "meton": ""} }
+                    "meton": ""} },
+                {"first": false, "extra": false, "moments": {"heading": "Para celebrar", "face": "https://example.com/mainumby.webp",
+                    "items": [{"text": "Este curso ya van 1.000 libros prestados.", "url": "https://example.com/record.php"},
+                        {"text": "La clase 3.º B ha cumplido su reto.", "url": ""}]} }
             ]
         }]
     }
@@ -74,7 +77,7 @@
     {{#sections}}
     <section class="ayvb-sec{{#extra}} ayvb-extra{{/extra}}">
         {{#books}}
-        <h3 class="ayvb-h">{{heading}}{{#count}}<span class="ayvb-count" aria-label="{{countlabel}}">{{count}}</span>{{/count}}</h3>
+        <h3 class="ayvb-h">{{heading}}{{#count}}<span class="ayvb-count"><span aria-hidden="true">{{count}}</span><span class="ayvb-sr">{{countlabel}}</span></span>{{/count}}</h3>
         {{#notice}}<p class="ayvb-due late">{{notice}}</p>{{/notice}}
         {{#hasitems}}
         <ul class="ayvb-books">
@@ -146,6 +149,14 @@
         </ul>
         {{#more}}<a class="ayvb-more" href="{{more}}">{{morelabel}}</a>{{/more}}
         {{/readings}}
+        {{#moments}}
+        <div class="ayvb-say{{^face}} no-face{{/face}}">
+            {{#face}}<img class="ayvb-face" src="{{face}}" alt="">{{/face}}
+            <div><h3 class="ayvb-h">{{heading}}</h3>
+                <ul class="ayvb-moments">{{#items}}<li>{{#url}}<a href="{{url}}">{{text}}</a>{{/url}}{{^url}}{{text}}{{/url}}</li>{{/items}}</ul>
+            </div>
+        </div>
+        {{/moments}}
         {{#pulse}}
         <h3 class="ayvb-h">{{heading}}</h3>
         <ul class="ayvb-counts">
