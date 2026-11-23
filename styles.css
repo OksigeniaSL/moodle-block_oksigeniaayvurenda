@@ -107,7 +107,7 @@
     font-weight: 700;
 }
 
-/* The library on the personal area (block 0.2.0, from Gaudí's mock-up). Everything hangs from .ayvb, inside the theme's
+/* The library on the personal area (block 0.2.0). Everything hangs from .ayvb, inside the theme's
  own block frame (title, border, card). Text, lines and surfaces take the theme's variables; the library's own things
  (cream plates, covers, Literata titles, pill buttons) keep Ayvurenda's colours, in light and dark alike. No container
  queries (Chrome 93 and Firefox 98 lack them): a tiny ResizeObserver sets data-size, and without it the block stays in
